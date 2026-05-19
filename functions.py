@@ -1,10 +1,10 @@
-amperagem = int(input("Amperagem: ")) # depois mudar todas essas variáveis para float
-voltagem = int(input("Voltagem: "))
-horas_uso = int(input("Horas de uso: "))
-TARIFA_BASE = 0.77
-bandeira_tarifaria = input("Bandeira tarifária atual: ").lower().strip()
-PIS_COFINS = 0.05 # valor que oscila todo mês, pensar em um jeito depois para ele ir mudando
-ICMS = 0.205
+amperagem = int(input("Amperagem: ")) # valor captado pela IoT
+voltagem = int(input("Voltagem: ")) # valor captado pela IoT
+horas_uso = int(input("Horas de uso: ")) # valor captado pela IoT
+TARIFA_BASE = 0.77 # constante
+bandeira_tarifaria = input("Bandeira tarifária atual: ").lower().strip() # API que pega essa infromação
+PIS_COFINS = 0.05 # API que pega essa informação | valor que oscila todo mês
+ICMS = 0.205 # API que pega essa informação
 
 def watt (amperagem, voltagem):
     return amperagem * voltagem 
