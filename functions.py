@@ -50,4 +50,13 @@ def cadastrar_aparelho ():
             writer = csv.writer(arquivo)
             writer.writerow([nome_aparelho, setor_aparelho, voltagem_aparelho])
 
-            
+def visualizar_aparelhos():
+    with open ("aparelhos.csv", "r", encoding="utf-8") as arquivo:
+        leitor = csv.reader(arquivo)
+        ler = list(leitor)
+        if not ler:
+            print("Não existem aparelhos cadastrados! Adicione-os.")
+        else:
+            print("\nAparelhos que cadastrados")
+        for i, ler in enumerate(ler, start=1):
+            print(f"{i} - Nome: {ler[0]} - Setor: {ler[1]} - Voltagem: {ler[2]}")
