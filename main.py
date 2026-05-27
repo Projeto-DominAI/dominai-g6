@@ -1,7 +1,14 @@
 import functions
 
-functions.cadastrar_aparelho()
+print("\n[1] Cadastrar aparelho\n[2] Visualizar aparelhos\n[3] Editar aparelhos\n[4] Deletar aparelhos")
+escolha = int(input("---> Escolha: "))
 
-functions.kwh_para_reais()
+if escolha == 1:
+    functions.cadastrar_aparelho()
 
-functions.visualizar_aparelhos()
+if escolha == 2:
+    functions.visualizar_aparelhos()
+
+if escolha == 10:
+    functions.kwh_para_reais()
+    
