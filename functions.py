@@ -47,8 +47,8 @@ def cadastrar_aparelho ():
         voltagem_aparelho = input("Voltagem: ")
 
         with open ("aparelhos.csv", "a", newline="", encoding="utf-8") as arquivo:
-            writer = csv.writer(arquivo)
-            writer.writerow([nome_aparelho, setor_aparelho, voltagem_aparelho])
+            escritor = csv.writer(arquivo)
+            escritor.writerow([nome_aparelho, setor_aparelho, voltagem_aparelho])
 
 def visualizar_aparelhos():
     with open ("aparelhos.csv", "r", encoding="utf-8") as arquivo:
