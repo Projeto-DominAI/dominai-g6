@@ -56,3 +56,46 @@ def visualizar_aparelhos():
             print("\nAparelhos que cadastrados")
         for i, ler in enumerate(ler, start=1):
             print(f"{i} - Nome: {ler[0]} - Setor: {ler[1]} - Voltagem: {ler[2]}")
+
+
+def deletar_aparelho():
+    nome_aparelho_deletar = input("\nDigite o nome do aparelho que você deseja deletar: ")
+
+    try:
+         with open ("data/aparelhos.csv", "r", newline="", encoding="utf-8") as arquivo:
+            leitor = csv.reader(arquivo)
+            aparelhos = list(leitor)
+
+         novos_aparelhos = []
+
+         for linha in aparelhos:
+            if not linha:
+                continue 
+            if linha[0].lower() == nome_aparelho_deletar.lower():
+                print(f"\nAparelho encontrado!\nNome: {linha[0]} - Setor: {linha[1]} - Voltagem: {linha[2]}")
+                confirmacao = input("Tem certeza que deseja deletar esse aparelho? [1] Sim / [2] Não: ")
+
+                if confirmacao == "1":
+                    print("Aparelho deletado com sucesso!")
+
+                    index_atual = aparelhos.index(linha)
+                    novos_aparelhos.extend(aparelhos[index_atual + 1:])
+                    break 
+            
+            novos_aparelhos.append(linha)
+         else: 
+             print("Aparelho não encontrado!")
+             return
+         
+         with open("data/aparelhos.csv", "w", newline="", encoding="utf-8") as arquivo:
+             escritor = csv.writer(arquivo)
+             escritor.writerows(novos_aparelhos)
+
+    except FileNotFoundError:
+        print("Arquivo de aparelhos não encontrado.")
+
+            
+ 
+
+
+    
