@@ -15,6 +15,9 @@ if escolha == 1:
 if escolha == 2:
     functions.visualizar_aparelhos()
 
+if escolha == 4:
+    functions.deletar_aparelho()
+
 if escolha == 10:
     functions.kwh_para_reais()
     
