@@ -1,4 +1,5 @@
 import csv
+import os
 
 def kwh_para_reais ():
 
@@ -47,8 +48,9 @@ def cadastrar_aparelho ():
         escritor.writerow([nome_aparelho, setor_aparelho, voltagem_aparelho])
 
 def visualizar_aparelhos():
-    with open ("aparelhos.csv", "r", encoding="utf-8") as arquivo:
+    with open ("data/aparelhos.csv", "r", encoding="utf-8") as arquivo:
         leitor = csv.reader(arquivo)
+        cabecalho = next(leitor)
         ler = list(leitor)
         if not ler:
             print("Não existem aparelhos cadastrados! Adicione-os.")
@@ -56,3 +58,32 @@ def visualizar_aparelhos():
             print("\nAparelhos que cadastrados")
         for i, ler in enumerate(ler, start=1):
             print(f"{i} - Nome: {ler[0]} - Setor: {ler[1]} - Voltagem: {ler[2]}")
+
+def atualizar_aparelho():
+    nome_aparelho=input("Digite o nome do aparelho: ")
+    setor_aparelho=input("Digite o setor do aparelho: ")
+    voltagem_aparelho=input("Digite a voltagem do aparelho: ")
+    execucao=0
+
+    with open("data/aparelhos.csv", 'r', newline='', encoding='utf-8') as arquivo, \
+         open("data/aparelhos_temp.csv", 'w', newline='', encoding='utf-8') as arquivo_temp:
+        
+        leitor = csv.reader(arquivo)
+        escritor = csv.writer(arquivo_temp)
+        
+        cabecalho = next(leitor)
+        escritor.writerow(cabecalho)
+
+        for i in leitor:
+            if not i:
+                continue
+            if i[0] == nome_aparelho:
+                i[1] = setor_aparelho
+                i[2] = voltagem_aparelho
+                execucao=1
+            escritor.writerow(i)
+    if execucao==1:
+        os.replace("data/aparelhos_temp.csv", "data/aparelhos.csv")
+        print("Aparelho atualizado")
+    else:
+        print("nome não encontrado")

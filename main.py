@@ -4,7 +4,6 @@ import src.menus as ui
 import os
 
 os.system("cls")
-
 escolha = int(input(ui.MENU_PRINCIPAL))
 
 if escolha == 1:
@@ -14,6 +13,9 @@ if escolha == 1:
 
 if escolha == 2:
     functions.visualizar_aparelhos()
+
+if escolha == 3:
+    functions.atualizar_aparelho()
 
 if escolha == 10:
     functions.kwh_para_reais()
