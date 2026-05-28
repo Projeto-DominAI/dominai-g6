@@ -38,17 +38,13 @@ def kwh_para_reais ():
     print(f"R${com_impostos(amperagem, voltagem, horas_uso, TARIFA_BASE, bandeira_tarifaria, PIS_COFINS, ICMS):.2f}")
 
 def cadastrar_aparelho ():
-    print("\n[1] Cadastrar aparelho\n[2] Visualizar aparelhos\n[3] Editar aparelhos\n[4] Deletar aparelhos")
-    escolha = int(input("---> Escolha: "))
-    
-    if escolha == 1:
-        nome_aparelho = input("\nNome: ")
-        setor_aparelho = input("Setor: ")
-        voltagem_aparelho = input("Voltagem: ")
+    nome_aparelho = input("▸ Nome: ")
+    setor_aparelho = input("▸ Setor: ")
+    voltagem_aparelho = input("▸ Voltagem: ")
 
-        with open ("aparelhos.csv", "a", newline="", encoding="utf-8") as arquivo:
-            writer = csv.writer(arquivo)
-            writer.writerow([nome_aparelho, setor_aparelho, voltagem_aparelho])
+    with open ("data/aparelhos.csv", "a", newline="", encoding="utf-8") as arquivo:
+        escritor = csv.writer(arquivo)
+        escritor.writerow([nome_aparelho, setor_aparelho, voltagem_aparelho])
 
 def visualizar_aparelhos():
     with open ("aparelhos.csv", "r", encoding="utf-8") as arquivo:

@@ -1,7 +1,20 @@
-import functions
+import csv
+import src.functions as functions
+import src.menus as ui
+import os
 
-functions.cadastrar_aparelho()
+os.system("cls")
 
-functions.kwh_para_reais()
+escolha = int(input(ui.MENU_PRINCIPAL))
 
-functions.visualizar_aparelhos()
+if escolha == 1:
+    os.system("cls")
+    print(ui.TITULO_CADASTRAR)
+    functions.cadastrar_aparelho()
+
+if escolha == 2:
+    functions.visualizar_aparelhos()
+
+if escolha == 10:
+    functions.kwh_para_reais()
+    
