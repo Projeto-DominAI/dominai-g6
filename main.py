@@ -1,18 +1,20 @@
-import functions
+import csv
+import src.functions as functions
+import src.menus as ui
+import os
 
-print("\n[1] Cadastrar aparelho\n[2] Visualizar aparelhos\n[3] Editar aparelhos\n[4] Deletar aparelhos")
-escolha = int(input("---> Escolha: "))
+os.system("cls")
+
+escolha = int(input(ui.MENU_PRINCIPAL))
 
 if escolha == 1:
+    os.system("cls")
+    print(ui.TITULO_CADASTRAR)
     functions.cadastrar_aparelho()
 
-<<<<<<< HEAD
 if escolha == 2:
     functions.visualizar_aparelhos()
 
 if escolha == 10:
     functions.kwh_para_reais()
     
-=======
-functions.visualizar_aparelhos()
->>>>>>> dc2444a66b02ec134bad42aa9097c8d4f7b18a0d
