@@ -102,28 +102,30 @@ def cadastrar_aparelho ():
     setor_aparelho = input("▸ Setor: ")
     voltagem_aparelho = input("▸ Voltagem: ")
 
-    with open ("data/aparelhos.csv", "a", newline="", encoding="utf-8") as arquivo:
+    with open ("dominai-g6/data/aparelhos.csv", "a", newline="", encoding="utf-8") as arquivo:
         escritor = csv.writer(arquivo)
         escritor.writerow([nome_aparelho, setor_aparelho, voltagem_aparelho])
 
+    print("Aparelho cadastrado!")
+
 def visualizar_aparelhos():
-    with open ("data/aparelhos.csv", "r", encoding="utf-8") as arquivo:
+    with open ("dominai-g6/data/aparelhos.csv", "r", encoding="utf-8") as arquivo:
         leitor = csv.reader(arquivo)
         cabecalho = next(leitor)
         ler = list(leitor)
         if not ler:
             print("Não existem aparelhos cadastrados! Adicione-os.")
         else:
-            print("\nAparelhos que cadastrados")
+            print("\nAparelhos cadastrados")
         for i, ler in enumerate(ler, start=1):
-            print(f"{i} - Nome: {ler[0]} - Setor: {ler[1]} - Voltagem: {ler[2]}")
+            print(f"[{i}] ▸ Nome: {ler[0]} ▸ Setor: {ler[1]} ▸ Voltagem: {ler[2]}")
 
 
 def deletar_aparelho():
-    nome_aparelho_deletar = input("\nDigite o nome do aparelho que você deseja deletar: ")
+    nome_aparelho_deletar = input("\n▸ Nome: ")
 
     try:
-         with open ("data/aparelhos.csv", "r", newline="", encoding="utf-8") as arquivo:
+         with open ("dominai-g6/data/aparelhos.csv", "r", newline="", encoding="utf-8") as arquivo:
             leitor = csv.reader(arquivo)
             aparelhos = list(leitor)
 
@@ -133,11 +135,11 @@ def deletar_aparelho():
             if not linha:
                 continue 
             if linha[0].lower() == nome_aparelho_deletar.lower():
-                print(f"\nAparelho encontrado!\nNome: {linha[0]} - Setor: {linha[1]} - Voltagem: {linha[2]}")
-                confirmacao = input("Tem certeza que deseja deletar esse aparelho? [1] Sim / [2] Não: ")
+                print(f"\nAparelho encontrado!\n\n▸ Nome: {linha[0]} ▸ Setor: {linha[1]} ▸ Voltagem: {linha[2]}\n")
+                confirmacao = input("Tem certeza que deseja deletar esse aparelho? \n\n[1] Sim / [2] Não: ")
 
                 if confirmacao == "1":
-                    print("Aparelho deletado com sucesso!")
+                    print("\nAparelho deletado com sucesso!")
 
                     index_atual = aparelhos.index(linha)
                     novos_aparelhos.extend(aparelhos[index_atual + 1:])
@@ -148,7 +150,7 @@ def deletar_aparelho():
              print("Aparelho não encontrado!")
              return
          
-         with open("data/aparelhos.csv", "w", newline="", encoding="utf-8") as arquivo:
+         with open("dominai-g6/data/aparelhos.csv", "w", newline="", encoding="utf-8") as arquivo:
              escritor = csv.writer(arquivo)
              escritor.writerows(novos_aparelhos)
 
@@ -167,7 +169,7 @@ def atualizar_aparelho():
     voltagem_aparelho=input("Digite a voltagem do aparelho: ")
     execucao=0
 
-    with open("data/aparelhos.csv", 'r', newline='', encoding='utf-8') as arquivo, \
+    with open("dominai-g6/data/aparelhos.csv", 'r', newline='', encoding='utf-8') as arquivo, \
          open("data/aparelhos_temp.csv", 'w', newline='', encoding='utf-8') as arquivo_temp:
         
         leitor = csv.reader(arquivo)

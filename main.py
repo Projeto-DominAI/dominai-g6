@@ -14,10 +14,15 @@ if escolha == 1:
     os.system("cls")
 
 if escolha == 2:
+    print(ui.TITULO_VISUALIZAR)
     functions.visualizar_aparelhos()
 
 if escolha == 3:
+    print(ui.TITULO_EDITAR)
     functions.atualizar_aparelho()
+
+if escolha == 4:
+    functions.deletar_aparelho()
 
 if escolha == 10:
     functions.calcular()
