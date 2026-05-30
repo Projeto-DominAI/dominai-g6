@@ -22,6 +22,7 @@ if escolha == 3:
     functions.atualizar_aparelho()
 
 if escolha == 4:
+    print(ui.TITULO_DELETAR)
     functions.deletar_aparelho()
 
 if escolha == 10:

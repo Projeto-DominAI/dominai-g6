@@ -102,14 +102,14 @@ def cadastrar_aparelho ():
     setor_aparelho = input("▸ Setor: ")
     voltagem_aparelho = input("▸ Voltagem: ")
 
-    with open ("dominai-g6/data/aparelhos.csv", "a", newline="", encoding="utf-8") as arquivo:
+    with open ("data/aparelhos.csv", "a", newline="", encoding="utf-8") as arquivo:
         escritor = csv.writer(arquivo)
         escritor.writerow([nome_aparelho, setor_aparelho, voltagem_aparelho])
 
     print("Aparelho cadastrado!")
 
 def visualizar_aparelhos():
-    with open ("dominai-g6/data/aparelhos.csv", "r", encoding="utf-8") as arquivo:
+    with open ("data/aparelhos.csv", "r", encoding="utf-8") as arquivo:
         leitor = csv.reader(arquivo)
         cabecalho = next(leitor)
         ler = list(leitor)
@@ -125,7 +125,7 @@ def deletar_aparelho():
     nome_aparelho_deletar = input("\n▸ Nome: ")
 
     try:
-         with open ("dominai-g6/data/aparelhos.csv", "r", newline="", encoding="utf-8") as arquivo:
+         with open ("data/aparelhos.csv", "r", newline="", encoding="utf-8") as arquivo:
             leitor = csv.reader(arquivo)
             aparelhos = list(leitor)
 
@@ -150,7 +150,7 @@ def deletar_aparelho():
              print("Aparelho não encontrado!")
              return
          
-         with open("dominai-g6/data/aparelhos.csv", "w", newline="", encoding="utf-8") as arquivo:
+         with open("data/aparelhos.csv", "w", newline="", encoding="utf-8") as arquivo:
              escritor = csv.writer(arquivo)
              escritor.writerows(novos_aparelhos)
 
@@ -169,7 +169,7 @@ def atualizar_aparelho():
     voltagem_aparelho=input("Digite a voltagem do aparelho: ")
     execucao=0
 
-    with open("dominai-g6/data/aparelhos.csv", 'r', newline='', encoding='utf-8') as arquivo, \
+    with open("data/aparelhos.csv", 'r', newline='', encoding='utf-8') as arquivo, \
          open("data/aparelhos_temp.csv", 'w', newline='', encoding='utf-8') as arquivo_temp:
         
         leitor = csv.reader(arquivo)
