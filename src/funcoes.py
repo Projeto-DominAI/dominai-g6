@@ -98,13 +98,19 @@ def calcular():
     print(f"R${com_impostos(kwh, TARIFA_BASE, PIS_COFINS, ICMS, grupo_empresa):.2f}")
 
 def cadastrar_aparelho ():
-    nome_aparelho = input("▸ Nome: ")
-    setor_aparelho = input("▸ Setor: ")
-    voltagem_aparelho = input("▸ Voltagem: ")
+    nome_equipamento = input("▸ Nome do Equipamento: ")
+    setor_equipamento = input("▸ Setor/Localização: ")
+    id_sensor = input("▸ ID do Sensor: ")
+
+    tensao_nominal_equipamento = input("▸ Tensão Nominal (V): ")
+    corrente_nominal_equipamento = input("▸ Corrente Nominal (A): ")
+    horas_previstas_equipamento = input("▸ Horas de Operação Previstas (h/dia): ")
 
     with open ("data/aparelhos.csv", "a", newline="", encoding="utf-8") as arquivo:
         escritor = csv.writer(arquivo)
-        escritor.writerow([nome_aparelho, setor_aparelho, voltagem_aparelho])
+        escritor.writerow([nome_equipamento, setor_equipamento, id_sensor,
+                           tensao_nominal_equipamento, corrente_nominal_equipamento,
+                           horas_previstas_equipamento])
 
     print("Aparelho cadastrado!")
 
@@ -118,8 +124,13 @@ def visualizar_aparelhos():
         else:
             print("\nAparelhos cadastrados")
         for i, ler in enumerate(ler, start=1):
-            print(f"[{i}] ▸ Nome: {ler[0]} ▸ Setor: {ler[1]} ▸ Voltagem: {ler[2]}")
-
+            print(f"[{i}]")
+            print(f"  ▸ {'Nome do Equipamento':<38} {ler[0]}")
+            print(f"  ▸ {'Setor/Localização':<38} {ler[1]}")
+            print(f"  ▸ {'ID do Sensor':<38} {ler[2]}")
+            print(f"  ▸ {'Tensão Nominal (V)':<38} {ler[3]}")
+            print(f"  ▸ {'Corrente Nominal (A)':<38} {ler[4]}")
+            print(f"  ▸ {'Horas de Operação Previstas (h/dia)':<38} {ler[5]}")
 
 def deletar_aparelho():
     nome_aparelho_deletar = input("\n▸ Nome: ")
@@ -156,12 +167,6 @@ def deletar_aparelho():
 
     except FileNotFoundError:
         print("Arquivo de aparelhos não encontrado.")
-
-            
- 
-
-
-    
 
 def atualizar_aparelho():
     nome_aparelho=input("Digite o nome do aparelho: ")
