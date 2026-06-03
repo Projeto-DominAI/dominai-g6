@@ -1,5 +1,5 @@
 import csv
-import src.functions as functions
+from src import funcoes
 import src.menus as ui
 import os
 
@@ -10,21 +10,21 @@ os.system("cls")
 
 if escolha == 1:
     print(ui.TITULO_CADASTRAR)
-    functions.cadastrar_aparelho()
+    funcoes.cadastrar_aparelho()
     os.system("cls")
 
 if escolha == 2:
     print(ui.TITULO_VISUALIZAR)
-    functions.visualizar_aparelhos()
+    funcoes.visualizar_aparelhos()
 
 if escolha == 3:
     print(ui.TITULO_EDITAR)
-    functions.atualizar_aparelho()
+    funcoes.atualizar_aparelho()
 
 if escolha == 4:
     print(ui.TITULO_DELETAR)
-    functions.deletar_aparelho()
+    funcoes.deletar_aparelho()
 
 if escolha == 10:
-    functions.calcular()
+    funcoes.calcular()
     

@@ -1,3 +1,4 @@
-computador,escritório,220
-Ventilador,Quarto de Chico,220
-iluminação,sala 07,220
+nome,setor,id_sensor,tensao,corrente,horas
+Televisão,Sala,AAA,220,5,3
+Computador Lucas,Quarto Lucas,BBB,220,8,6
+Ar Condicionado,Quarto Lucas,CCC,220,10,15
