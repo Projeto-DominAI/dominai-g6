@@ -1,4 +1,2 @@
-nome,setor,id_sensor,tensao,corrente,horas
-Televisão,Sala,AAA,220,5,3
-Computador Lucas,Quarto Lucas,BBB,220,8,6
-Ar Condicionado,Quarto Lucas,CCC,220,10,15
+id_equipamento,nome,setor,id_sensor,tensao,corrente,horas
+20260603171144,TESTE,MOINHO 2,DDD,220,10,10

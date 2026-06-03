@@ -1,5 +1,6 @@
 import csv
 import os
+import datetime
 
 def kwh_para_reais ():
     grupo_empresa = input("Digite o Tipo da empresa A ou B: ").lower().strip()
@@ -98,6 +99,7 @@ def calcular():
     print(f"R${com_impostos(kwh, TARIFA_BASE, PIS_COFINS, ICMS, grupo_empresa):.2f}")
 
 def cadastrar_aparelho ():
+    id_equipamento = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     nome_equipamento = input("▸ Nome do Equipamento: ")
     setor_equipamento = input("▸ Setor/Localização: ")
     id_sensor = input("▸ ID do Sensor: ")
@@ -108,7 +110,7 @@ def cadastrar_aparelho ():
 
     with open ("data/aparelhos.csv", "a", newline="", encoding="utf-8") as arquivo:
         escritor = csv.writer(arquivo)
-        escritor.writerow([nome_equipamento, setor_equipamento, id_sensor,
+        escritor.writerow([id_equipamento, nome_equipamento, setor_equipamento, id_sensor,
                            tensao_nominal_equipamento, corrente_nominal_equipamento,
                            horas_previstas_equipamento])
 
@@ -125,12 +127,13 @@ def visualizar_aparelhos():
             print("\nAparelhos cadastrados")
         for i, ler in enumerate(ler, start=1):
             print(f"[{i}]")
-            print(f"  ▸ {'Nome do Equipamento':<38} {ler[0]}")
-            print(f"  ▸ {'Setor/Localização':<38} {ler[1]}")
-            print(f"  ▸ {'ID do Sensor':<38} {ler[2]}")
-            print(f"  ▸ {'Tensão Nominal (V)':<38} {ler[3]}")
-            print(f"  ▸ {'Corrente Nominal (A)':<38} {ler[4]}")
-            print(f"  ▸ {'Horas de Operação Previstas (h/dia)':<38} {ler[5]}")
+            print(f"  ▸ {'ID do Equipamento':<38} {ler[0]}")
+            print(f"  ▸ {'Nome do Equipamento':<38} {ler[1]}")
+            print(f"  ▸ {'Setor/Localização':<38} {ler[2]}")
+            print(f"  ▸ {'ID do Sensor':<38} {ler[3]}")
+            print(f"  ▸ {'Tensão Nominal (V)':<38} {ler[4]}")
+            print(f"  ▸ {'Corrente Nominal (A)':<38} {ler[5]}")
+            print(f"  ▸ {'Horas de Operação Previstas (h/dia)':<38} {ler[6]}")
 
 def deletar_aparelho():
     nome_aparelho_deletar = input("\n▸ Nome: ")
