@@ -172,30 +172,40 @@ def deletar_aparelho():
         print("Arquivo de aparelhos não encontrado.")
 
 def atualizar_aparelho():
-    nome_aparelho=input("Digite o nome do aparelho: ")
-    setor_aparelho=input("Digite o setor do aparelho: ")
-    voltagem_aparelho=input("Digite a voltagem do aparelho: ")
     execucao=0
-
+    nome_aparelho=input("Digite o nome do aparelho: ").strip()
     with open("data/aparelhos.csv", 'r', newline='', encoding='utf-8') as arquivo, \
-         open("data/aparelhos_temp.csv", 'w', newline='', encoding='utf-8') as arquivo_temp:
-        
+        open("data/aparelhos_temp.csv", 'w', newline='', encoding='utf-8') as arquivo_temp:
         leitor = csv.reader(arquivo)
         escritor = csv.writer(arquivo_temp)
-        
         cabecalho = next(leitor)
         escritor.writerow(cabecalho)
-
         for i in leitor:
-            if not i:
-                continue
-            if i[0] == nome_aparelho:
-                i[1] = setor_aparelho
-                i[2] = voltagem_aparelho
-                execucao=1
+            if i[1] == nome_aparelho:
+                id_a=i[0]
+                print(f"nome:       {i[1]}\nsetor:      {i[2]}\ntensao:     {i[4]}\namperagem:  {i[5]}\nhoras:      {i[6]}")
+                escolha=input("deseja alterar o aparelho?\nsim para aceitar\n")
+                if escolha.strip().lower()=="sim":
+                    execucao=2
+                    print(f"setor atual: {i[2]}")
+                    setor_aparelho=input("Digite o setor do aparelho: ")
+                    print(f"voltagem atual: {i[4]}")
+                    voltagem_aparelho=input("Digite a voltagem do aparelho: ")
+                    print(f"amperagem atual: {i[5]}")
+                    amperagem_aparelho=input("Digite a amperagem do aparelho: ")
+                    i[0] = id_a
+                    i[2] = setor_aparelho.strip()
+                    i[4] = voltagem_aparelho.strip()
+                    i[5] = amperagem_aparelho.strip()
+                else:
+                    execucao=1
             escritor.writerow(i)
     if execucao==1:
+        print("edição cancelada")
+        os.remove("data/aparelhos_temp.csv")
+    if execucao==2:
         os.replace("data/aparelhos_temp.csv", "data/aparelhos.csv")
         print("Aparelho atualizado")
-    else:
-        print("nome não encontrado")
+    if execucao==0:
+        print("aparelho não encontrado")
+        os.remove("data/aparelhos_temp.csv")
