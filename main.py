@@ -1,17 +1,33 @@
 import csv
 import src.functions as functions
 import src.menus as ui
+import src.auth as auth
 import os
 
+auth.criar_csv_empresas()
 os.system("cls")
-escolha = int(input(ui.MENU_PRINCIPAL))
 
-os.system("cls")
+print(ui.MENU_PRINCIPAL_AUTH)
+escolha_auth = input("➜ ").strip()
+
+empresa = None
+
+if escolha_auth == "2":
+    empresa = auth.cadastro_das_empresas()
+elif escolha_auth == "1":
+    empresa = auth.login_empresa()
+
+if empresa is None:
+    print("Encerrando processo.")
+
+else:
+    os.system("cls")
+    escolha = int(input(ui.MENU_PRINCIPAL))
+    os.system("cls")
 
 if escolha == 1:
     print(ui.TITULO_CADASTRAR)
     functions.cadastrar_aparelho()
-    os.system("cls")
 
 if escolha == 2:
     print(ui.TITULO_VISUALIZAR)
