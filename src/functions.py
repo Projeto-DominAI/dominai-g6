@@ -1,8 +1,11 @@
 import csv
 import os
 
-def kwh_para_reais ():
-    grupo_empresa = input("Digite o Tipo da empresa A ou B: ").lower().strip()
+def kwh_para_reais (empresa):
+    grupo_empresa = empresa["grupo"]
+    regime = empresa["regime"]
+    atividade = empresa["atividade"]
+
     if grupo_empresa == "b":
         amperagem = float(input("\nAmperagem: "))
 
@@ -30,37 +33,24 @@ def kwh_para_reais ():
 
         TARIFA_BASE = custo_fora + custo_ponta + custo_demanda
         kwh = kwh_fora + kwh_ponta
-
-    regime = input("Regime da empresa (simples/presumido/real): ").lower().strip() 
-    while True:
-            if regime == "simples":
-                PIS_COFINS = 0.0
-                break
-            elif regime == "presumido":
-                PIS_COFINS = 0.0365
-                break
-            elif regime == "real":
-                PIS_COFINS = 0.0925
-                break
-            else:
-                print("Digite uma opção valida.")
-                continue
-
-    atividade = input("Digite a atividade (comercio ou industria): ").lower().strip()
-    while True:
-        if atividade == "comercio":
-            ICMS = 0.18
-            break
-        elif atividade == "industria":
-            ICMS = 0.12
-            break
-        else:
-            print("Digite uma opção valida.")
-            continue
+    
+    if regime == "simples": 
+        PIS_COFINS = 0.0
+    elif regime == "presumido":
+        PIS_COFINS = 0.0365
+    elif regime == "real":
+        PIS_COFINS = 0.0925
+    
+    if atividade == "comercio":
+        ICMS = 0.18
+    elif atividade == "industria":
+        ICMS = 0.12
 
     return kwh, PIS_COFINS, ICMS, TARIFA_BASE, grupo_empresa
-    
 
+def calculo(empresa):
+    kwh, PIS_COFINS, ICMS, TARIFA_BASE, grupo_empresa = kwh_para_reais(empresa)
+    print(f"R${com_impostos(kwh, TARIFA_BASE, PIS_COFINS, ICMS, grupo_empresa):.2f}")
 
 def com_bandeiras (kwh, TARIFA_BASE, grupo_empresa):
     bandeira_tarifaria = input("Digite o tipo da bandeira (verde / amarela / vermelha / vermelha2) ").lower().strip()
