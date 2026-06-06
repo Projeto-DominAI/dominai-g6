@@ -1,6 +1,6 @@
 import csv
 import os
-import src.functions as functions
+import src.funcoes as functions
 import src.menus as ui
 import src.auth as auth
 
