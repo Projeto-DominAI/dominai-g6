@@ -182,27 +182,47 @@ def atualizar_aparelho():
         escritor.writerow(cabecalho)
         for i in leitor:
             if i[1] == nome_aparelho:
-                id_a=i[0]
-                print(f"nome:       {i[1]}\nsetor:      {i[2]}\ntensao:     {i[4]}\namperagem:  {i[5]}\nhoras:      {i[6]}")
-                escolha=input("deseja alterar o aparelho?\nsim para aceitar\n")
-                if escolha.strip().lower()=="sim":
-                    execucao=2
-                    print(f"setor atual: {i[2]}")
-                    setor_aparelho=input("Digite o setor do aparelho: ")
-                    print(f"voltagem atual: {i[4]}")
-                    voltagem_aparelho=input("Digite a voltagem do aparelho: ")
-                    print(f"amperagem atual: {i[5]}")
-                    amperagem_aparelho=input("Digite a amperagem do aparelho: ")
-                    i[0] = id_a
-                    i[2] = setor_aparelho.strip()
-                    i[4] = voltagem_aparelho.strip()
-                    i[5] = amperagem_aparelho.strip()
-                else:
-                    execucao=1
+                while True:
+                    print(f"1-nome:          {i[1]}\n2-setor:         {i[2]}\n3-tensão:        {i[4]}\n4-ID do Sensor: {i[3]}\n5-amperagem:     {i[5]}\n6-horas:         {i[6]}")
+                    escolha=int(input("escolha um para editar\n"))
+                    if escolha==1:
+                        print(f"setor atual: {i[1]}")
+                        nome=input("Digite o novo nome do aparelho: ")
+                        execucao=2
+                        i[1] = nome.strip()
+                    elif escolha==2:
+                        print(f"setor atual: {i[2]}")
+                        setor_aparelho=input("Digite o setor do aparelho: ")
+                        execucao=2
+                        i[2] = setor_aparelho.strip()
+                    elif escolha==3:
+                        print(f"voltagem atual: {i[4]}")
+                        voltagem_aparelho=input("Digite a voltagem do aparelho: ")
+                        execucao=2
+                        i[4] = voltagem_aparelho.strip()
+                    elif escolha==4:
+                        print(f"ID do sensor atual atual: {i[3]}")
+                        id_sensor=input("Digite o novo ID do Sensor: ")
+                        execucao=2
+                        i[4] = id_sensor.strip()
+                    elif escolha==5:
+                        print(f"amperagem atual: {i[5]}")
+                        amperagem_aparelho=input("Digite a amperagem do aparelho: ")
+                        execucao=2
+                        i[5] = amperagem_aparelho.strip()
+                    elif escolha==6:
+                        print(f"horas atuais: {i[6]}")
+                        horas=input("Digite a quantidade de horas do aparelho: ")
+                        execucao=2
+                        i[6] = horas.strip()
+                    if execucao==2:
+                        escolha=int(input("Você deseja editar mais alguma informação?\n[1] Sim\n[2] Não\n"))
+                        if escolha==2:
+                            break
+                    if execucao!=2:
+                        print("opção inválida")
+
             escritor.writerow(i)
-    if execucao==1:
-        print("edição cancelada")
-        os.remove("data/aparelhos_temp.csv")
     if execucao==2:
         os.replace("data/aparelhos_temp.csv", "data/aparelhos.csv")
         print("Aparelho atualizado")
