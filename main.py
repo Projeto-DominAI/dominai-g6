@@ -24,6 +24,8 @@ while True:
         os.system("cls")
         print(ui.TITULO_DELETAR)
         funcoes.deletar_aparelho()
+    elif escolha == 5: 
+        funcoes.analisar_aparelho()
     elif escolha == 10:
         os.system("cls")
         funcoes.calcular()

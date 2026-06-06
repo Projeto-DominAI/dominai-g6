@@ -13,6 +13,7 @@ MENU_PRINCIPAL = """
   [2] Visualizar aparelhos
   [3] Editar aparelhos
   [4] Deletar aparelhos
+  [5] Analisar aparelhos
 
 ----------------------------------------
   ➜ Escolha uma opção: """

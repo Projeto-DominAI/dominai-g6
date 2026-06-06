@@ -174,7 +174,7 @@ def deletar_aparelho():
 def atualizar_aparelho():
     execucao=0
     nome_aparelho=input("Digite o nome do aparelho: ").strip()
-    with open("data/aparelhos.csv", 'r', newline='', encoding='utf-8') as arquivo, \
+    with open("data/aparelhos_temp.csv", 'r', newline='', encoding='utf-8') as arquivo, \
         open("data/aparelhos_temp.csv", 'w', newline='', encoding='utf-8') as arquivo_temp:
         leitor = csv.reader(arquivo)
         escritor = csv.writer(arquivo_temp)
@@ -209,3 +209,94 @@ def atualizar_aparelho():
     if execucao==0:
         print("aparelho não encontrado")
         os.remove("data/aparelhos_temp.csv")
+
+def analisar_aparelho():
+    nome_aparelho_analisar = input("\nDigite o nome do aparelho que você deseja analisar: ").strip()
+
+    aparelhos_encontrados = []
+
+    with open("data/aparelhos.csv", 'r', newline='', encoding='utf-8') as arquivo:
+        leitor = csv.reader(arquivo)
+        cabecalho = next(leitor)
+
+        for linha in leitor:
+            if linha[1].strip().lower() == nome_aparelho_analisar.strip().lower():
+                aparelhos_encontrados.append(linha)
+
+    if len(aparelhos_encontrados) == 0:
+        print("\nAparelho não encontrado no cadastro.")
+        return
+        
+    print(f"\nEncontramos {len(aparelhos_encontrados)} aparelho(s) com esse nome:")
+
+    for i in aparelhos_encontrados:
+        print(f"\nId do Equipamento: {i[0]}")
+        print(f"Nome: {i[1].capitalize()}")
+        print(f"Setor: {i[2].capitalize()}")
+        print(f"Id do Sensor: {i[3]}")
+        print(f"Tensão Prevista: {i[4]}V")
+        print(f"Corrente Prevista: {i[5]}A")
+        print(f"Horas Previstas: {i[6]}h")
+
+    dados_aparelhos_escolhidos = []
+
+    if len(aparelhos_encontrados) == 1:
+        dados_aparelhos_escolhidos = aparelhos_encontrados[0]
+        
+    if len(aparelhos_encontrados) > 1: 
+        id_valido = 0
+        while id_valido == 0:
+            id_escolhido = input("\nDigite o ID do equipamento que deseja analisar: ").strip()
+
+            for i in aparelhos_encontrados:
+                if i[0] == id_escolhido:
+                    dados_aparelhos_escolhidos = i 
+                    id_valido = 1
+            if id_valido == 0:
+                print("ID do equipamento inválido! Tente novamente.")
+
+    print("\nAparelho selecionado com sucesso!")
+
+    id_sensor = dados_aparelhos_escolhidos[3]
+    tensao_prevista = float(dados_aparelhos_escolhidos[4])
+    corrente_prevista = float(dados_aparelhos_escolhidos[5])
+    horas_prevista = float(dados_aparelhos_escolhidos[6])
+
+    print(f"\nCOMPARAÇÃO COM HISTÓRICO DO ARDUINO (ID Sensor: {id_sensor})\n")
+
+    dados_arduino_aparelho = 0
+
+    with open("data/dados_arduino.csv", 'r', newline='', encoding='utf-8') as arquivo_arduino:
+        leitor_arduino = csv.reader(arquivo_arduino)
+        cabecalho_arduino = next(leitor_arduino)
+
+        for linha in leitor_arduino:
+            if linha[1].strip().lower() == id_sensor.strip().lower():
+                dados_arduino_aparelho = 1
+
+                timestamp = linha[0]
+                tensao_real = float(linha[2])
+                corrente_real = float(linha[3])
+                horas_real = float(linha[4])
+
+                print(f"Medição em: {timestamp}")
+                print(f" --> Tensão: Real {tensao_real}V vs Prevista {tensao_prevista}V")
+                print(f" --> Corrente: Real {corrente_real}A vs Prevista {corrente_prevista}A")
+                print(f" --> Horas: Real {horas_real}h vs Prevista {horas_prevista}h")
+
+                limite_tensao = tensao_prevista * 1.40
+                if tensao_real >= limite_tensao:
+                    print(f"\nAlerta: A tensão {tensao_real}V é 40% ou mais maior que o previsto ({tensao_prevista}V)! Investigue o equipamento.")
+    
+                limite_corrente = corrente_prevista * 1.40
+                if corrente_real >= limite_corrente:
+                    print(f"\nAlerta: A corrente {corrente_real}A é 40% ou mais maior que o previsto ({corrente_prevista}A)! Investigue o equipamento.")
+
+                limite_horas = horas_prevista * 1.40
+                if horas_real >= limite_horas:
+                    print(f"\nAlerta: O horário {horas_real}h é 40% ou mais maior que o previsto ({horas_prevista}h)! Investigue o equipamento.")
+
+
+    if dados_arduino_aparelho == 0:
+        print("Aviso: Nenhum dado real foi enviado por este sensor ainda.")
+
