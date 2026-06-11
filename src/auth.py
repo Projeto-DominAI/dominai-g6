@@ -6,8 +6,8 @@ arquivo_empresas = "data/empresas.csv"
 def criar_csv_empresas():
     if not os.path.exists("data"):
         os.makedirs("data")
-    if not os.path.exists("arquivo_empresas"):
-        with open(arquivo_empresas, "w", newline="", encoding="utf=8") as arquivo:
+    if not os.path.exists(arquivo_empresas):
+        with open(arquivo_empresas, "w", newline="", encoding="utf-8") as arquivo:
             escritor = csv.writer(arquivo)
             escritor.writerow(["nome", "senha", "grupo", "regime", "atividade"])
 
