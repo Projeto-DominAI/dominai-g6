@@ -100,9 +100,9 @@ def calcular():
 
 def cadastrar_aparelho ():
     id_equipamento = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-    nome_equipamento = input("▸ Nome do Equipamento: ")
-    setor_equipamento = input("▸ Setor/Localização: ")
-    id_sensor = input("▸ ID do Sensor: ")
+    nome_equipamento = input("▸ Nome do Equipamento: ").strip()
+    setor_equipamento = input("▸ Setor/Localização: ").strip()
+    id_sensor = input("▸ ID do Sensor: ").strip().upper()
 
     tensao_nominal_equipamento = input("▸ Tensão Nominal (V): ")
     corrente_nominal_equipamento = input("▸ Corrente Nominal (A): ")
@@ -141,39 +141,67 @@ def deletar_aparelho():
     try:
          with open ("data/aparelhos.csv", "r", newline="", encoding="utf-8") as arquivo:
             leitor = csv.reader(arquivo)
+            cabecalho = next(leitor)
             aparelhos = list(leitor)
 
-         novos_aparelhos = []
+         aparelhos_encontrados = []
 
          for linha in aparelhos:
             if not linha:
-                continue 
-            if linha[0].lower() == nome_aparelho_deletar.lower():
-                print(f"\nAparelho encontrado!\n\n▸ Nome: {linha[0]} ▸ Setor: {linha[1]} ▸ Voltagem: {linha[2]}\n")
-                confirmacao = input("Tem certeza que deseja deletar esse aparelho? \n\n[1] Sim / [2] Não: ")
+                continue
+            if linha[1].lower() == nome_aparelho_deletar.lower():
+                aparelhos_encontrados.append(linha)
 
-                if confirmacao == "1":
-                    print("\nAparelho deletado com sucesso!")
-
-                    index_atual = aparelhos.index(linha)
-                    novos_aparelhos.extend(aparelhos[index_atual + 1:])
-                    break 
-            
-            novos_aparelhos.append(linha)
-         else: 
+         if len(aparelhos_encontrados) == 0:
              print("Aparelho não encontrado!")
              return
-         
-         with open("data/aparelhos.csv", "w", newline="", encoding="utf-8") as arquivo:
-             escritor = csv.writer(arquivo)
-             escritor.writerows(novos_aparelhos)
+
+         encontrou = 0
+         linha_deletar = []
+
+         if len(aparelhos_encontrados) > 1:
+             print(f"\nForam encontrados {len(aparelhos_encontrados)} aparelhos com esse nome:\n")
+             i = 1
+             for linha in aparelhos_encontrados:
+                 print(f"  [{i}] ID: {linha[0]}  ▸ Setor: {linha[2]}  ▸ Tensão: {linha[4]}V")
+                 i += 1
+
+             while encontrou == 0:
+                 escolha = input("\n▸ Digite o número do aparelho que deseja deletar: ")
+                 if escolha.isdigit() and 1 <= int(escolha) <= len(aparelhos_encontrados):
+                     linha_deletar = aparelhos_encontrados[int(escolha) - 1]
+                     encontrou = 1
+                 else:
+                     print("Opção inválida. Tente novamente.")
+         else:
+             linha_deletar = aparelhos_encontrados[0]
+
+         print(f"\nAparelho encontrado!\n\n▸ Nome: {linha_deletar[1]} ▸ Setor: {linha_deletar[2]} ▸ Tensão: {linha_deletar[4]}\n")
+         confirmacao = input("Tem certeza que deseja deletar esse aparelho? \n\n[1] Sim / [2] Não: ")
+
+         if confirmacao == "1":
+             novos_aparelhos = []
+
+             for linha in aparelhos:
+                if not linha:
+                    continue
+                if linha[0] != linha_deletar[0]:
+                    novos_aparelhos.append(linha)
+
+             with open("data/aparelhos.csv", "w", newline="", encoding="utf-8") as arquivo:
+                 escritor = csv.writer(arquivo)
+                 escritor.writerow(cabecalho)
+                 escritor.writerows(novos_aparelhos)
+
+             print("\nAparelho deletado com sucesso!")
 
     except FileNotFoundError:
         print("Arquivo de aparelhos não encontrado.")
 
 def atualizar_aparelho():
     execucao=0
-    nome_aparelho=input("Digite o nome do aparelho: ").strip()
+    nome_aparelho=input("Digite o nome do aparelho: ").strip().lower()
+
     with open("data/aparelhos_temp.csv", 'r', newline='', encoding='utf-8') as arquivo, \
         open("data/aparelhos_temp.csv", 'w', newline='', encoding='utf-8') as arquivo_temp:
         leitor = csv.reader(arquivo)

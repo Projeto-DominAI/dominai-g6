@@ -13,7 +13,7 @@ escolha_auth = input("➜ ").strip()
 empresa = None
 
 if escolha_auth == "2":
-    empresa = auth.cadastrar_empresa()
+    empresa = auth.cadastro_das_empresas()
 elif escolha_auth == "1":
     empresa = auth.login_empresa()
 
@@ -21,7 +21,15 @@ if empresa is None:
     print("Encerrando processo.")
 else:
     os.system("cls")
-    escolha = int(input(ui.MENU_PRINCIPAL))
+    escolha_valida = 0
+    while escolha_valida == 0:
+        try:
+            escolha = int(input(ui.MENU_PRINCIPAL))
+            escolha_valida = 1
+        except ValueError:
+            print("Erro: Digite apenas números inteiros. Tente novamente. ")
+
+
     os.system("cls")
 
     if escolha == 1:
@@ -39,6 +47,9 @@ else:
     if escolha == 4:
         print(ui.TITULO_DELETAR)
         functions.deletar_aparelho()
+    
+    if escolha == 5:
+        functions.analisar_aparelho()
 
     if escolha == 10:
         functions.calcular(empresa)
