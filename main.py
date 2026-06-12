@@ -5,7 +5,7 @@ import src.menus as ui
 import src.auth as auth
 
 auth.criar_csv_empresas()
-os.system("cls")
+os.system('cls' if os.name =='nt' else 'clear')
 
 print(ui.MENU_PRINCIPAL_AUTH)
 escolha_auth = input("➜ ").strip()
@@ -20,7 +20,7 @@ elif escolha_auth == "1":
 if empresa is None:
     print("Encerrando processo.")
 else:
-    os.system("cls")
+    os.system('cls' if os.name =='nt' else 'clear')
     escolha_valida = 0
     while escolha_valida == 0:
         try:
@@ -29,8 +29,7 @@ else:
         except ValueError:
             print("Erro: Digite apenas números inteiros. Tente novamente. ")
 
-
-    os.system("cls")
+    os.system('cls' if os.name =='nt' else 'clear')
 
     if escolha == 1:
         print(ui.TITULO_CADASTRAR)
@@ -49,7 +48,9 @@ else:
         functions.deletar_aparelho()
     
     if escolha == 5:
+        print(ui.TITULO_ANALISAR)
         functions.analisar_aparelho()
 
     if escolha == 10:
+        print(ui.CALCULAR_EMPRESA)
         functions.calcular(empresa)

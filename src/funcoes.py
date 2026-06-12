@@ -149,7 +149,7 @@ def deletar_aparelho():
          for linha in aparelhos:
             if not linha:
                 continue
-            if linha[1].lower() == nome_aparelho_deletar.lower():
+            if linha[1].strip().lower().replace("-", " ") == nome_aparelho_deletar.strip().lower().replace("-", " "):
                 aparelhos_encontrados.append(linha)
 
          if len(aparelhos_encontrados) == 0:
@@ -200,74 +200,123 @@ def deletar_aparelho():
 
 def atualizar_aparelho():
     execucao=0
-    nome_aparelho=input("Digite o nome do aparelho: ").strip().lower()
 
-    with open("data/aparelhos_temp.csv", 'r', newline='', encoding='utf-8') as arquivo, \
+    nome_aparelho=input("Digite o nome do aparelho: ").strip()
+
+    with open("data/aparelhos.csv", 'r', newline='', encoding='utf-8') as arquivo, \
         open("data/aparelhos_temp.csv", 'w', newline='', encoding='utf-8') as arquivo_temp:
         leitor = csv.reader(arquivo)
-        escritor = csv.writer(arquivo_temp)
         cabecalho = next(leitor)
-        escritor.writerow(cabecalho)
-        for i in leitor:
-            if i[1] == nome_aparelho:
-                while True:
-                    print(f"1-nome:          {i[1]}\n2-setor:         {i[2]}\n3-tensão:        {i[4]}\n4-ID do Sensor: {i[3]}\n5-amperagem:     {i[5]}\n6-horas:         {i[6]}")
-                    escolha=int(input("escolha um para editar\n"))
-                    if escolha==1:
-                        print(f"setor atual: {i[1]}")
-                        nome=input("Digite o novo nome do aparelho: ")
-                        execucao=2
-                        i[1] = nome.strip()
-                    elif escolha==2:
-                        print(f"setor atual: {i[2]}")
-                        setor_aparelho=input("Digite o setor do aparelho: ")
-                        execucao=2
-                        i[2] = setor_aparelho.strip()
-                    elif escolha==3:
-                        print(f"voltagem atual: {i[4]}")
-                        voltagem_aparelho=input("Digite a voltagem do aparelho: ")
-                        execucao=2
-                        i[4] = voltagem_aparelho.strip()
-                    elif escolha==4:
-                        print(f"ID do sensor atual atual: {i[3]}")
-                        id_sensor=input("Digite o novo ID do Sensor: ")
-                        execucao=2
-                        i[4] = id_sensor.strip()
-                    elif escolha==5:
-                        print(f"amperagem atual: {i[5]}")
-                        amperagem_aparelho=input("Digite a amperagem do aparelho: ")
-                        execucao=2
-                        i[5] = amperagem_aparelho.strip()
-                    elif escolha==6:
-                        print(f"horas atuais: {i[6]}")
-                        horas=input("Digite a quantidade de horas do aparelho: ")
-                        execucao=2
-                        i[6] = horas.strip()
-                    if execucao==2:
-                        escolha=int(input("Você deseja editar mais alguma informação?\n[1] Sim\n[2] Não\n"))
-                        if escolha==2:
-                            break
-                    if execucao!=2:
-                        print("opção inválida")
+        aparelhos = list(leitor)
 
-            escritor.writerow(i)
-    if execucao==2:
-        os.replace("data/aparelhos_temp.csv", "data/aparelhos.csv")
-        print("Aparelho atualizado")
-    if execucao==0:
-        print("aparelho não encontrado")
-        os.remove("data/aparelhos_temp.csv")
+        aparelhos_encontrados = []
+        posicoes = []
+
+        posicao_atual = 0
+
+        for linha in aparelhos:
+            if not linha:
+                continue
+            if linha[1].strip().lower() == nome_aparelho.lower():
+                aparelhos_encontrados.append(linha)
+                posicoes.append(posicao_atual)
+            posicao_atual = posicao_atual + 1
+
+        if len(aparelhos_encontrados) == 0:
+            print("Aparelho não encontrado!")
+            return
+        if len(aparelhos_encontrados) > 1:
+            print(f"\nForam encontrados {len(aparelhos_encontrados)} aparelhos com esse nome:\n")
+
+            numero = 1 
+            
+            for linha in aparelhos_encontrados:
+                print(f" [{numero}] ID: {linha[0]} > Setor: {linha[2]} > Tensão: {linha[4]}V")
+                numero = numero + 1
+            while True:
+                escolha_numero = input("\n▸ Digite o número do aparelho que deseja editar: ")
+                if escolha_numero.isdigit() and 1 <= int(escolha_numero) <= len(aparelhos_encontrados):
+                    posicao_escolhida = posicoes[int(escolha_numero) - 1]
+                    break
+                else:
+                    print("Opção inválida. Tente novamente.")
+        else:
+            posicao_escolhida = posicoes[0]
+
+    i = aparelhos[posicao_escolhida]
+
+    while True:
+        print(f"1- Nome:          {i[1]}\n2- Setor:         {i[2]}\n3- Tensão:        {i[4]}\n4- ID do Sensor:  {i[3]}\n5- Amperagem:     {i[5]}\n6- Horas:         {i[6]}")
+        escolha=int(input("Escolha um para editar: \n"))
+        if escolha==1:
+            print(f"Setor atual: {i[1]}")
+            nome=input("\nDigite o novo nome do aparelho: ").strip()
+            execucao = 2
+            i[1] = nome.strip()
+        elif escolha==2:
+            print(f"Setor atual: {i[2]}")
+            setor_aparelho=input("\nDigite o novo setor do aparelho: ")
+            execucao=2
+            i[2] = setor_aparelho.strip()
+        elif escolha==3:
+            print(f"Voltagem atual: {i[4]}")
+            voltagem_aparelho=input("\nDigite a nova voltagem do aparelho: ")
+            execucao=2
+            i[4] = voltagem_aparelho.strip()
+        elif escolha==4:
+            print(f"ID do sensor atual atual: {i[3]}")
+            id_sensor=input("\nDigite o novo ID do Sensor: ")
+            execucao=2
+            i[3] = id_sensor.strip()
+        elif escolha==5:
+            print(f"Amperagem atual: {i[5]}")
+            amperagem_aparelho=input("\nDigite a nova amperagem do aparelho: ")
+            execucao=2
+            i[5] = amperagem_aparelho.strip()
+        elif escolha==6:
+            print(f"Horas atuais: {i[6]}")
+            horas=input("\nDigite a nova quantidade de horas do aparelho: ")
+            execucao=2
+            i[6] = horas.strip()
+        else:
+            print("\nOpção inválida")
+            continue
+
+        while True:
+            escolha=int(input("\nVocê deseja editar mais alguma informação? [1] Sim \ [2] Não: "))
+            if escolha == 1:
+                break
+            elif escolha == 2:
+                execucao_loop = False
+                break 
+            else:
+                print("Opção inválida! Digite 1 ou 2.")
+        if not execucao_loop:
+            break
+        
+        aparelhos[posicao_escolhida] = i 
+
+        with open("data/aparelhos_temp.csv", "w", newline="", encoding="utf-8") as arquivo_temp:
+            escritor = csv.writer(arquivo_temp)
+            escritor.writerow(cabecalho)
+            escritor.writerows(aparelhos)
+
+        if execucao==2:
+            os.replace("data/aparelhos_temp.csv", "data/aparelhos.csv")
+            print("Aparelho atualizado")
 
 def analisar_aparelho():
     nome_aparelho_analisar = input("\nDigite o nome do aparelho que você deseja analisar: ").strip()
 
     aparelhos_encontrados = []
 
-    with open("data/aparelhos.csv", 'r', newline='', encoding='utf-8') as arquivo:
+    with open("data/aparelhos.csv", "r", newline="", encoding="utf-8") as arquivo:
         leitor = csv.reader(arquivo)
         cabecalho = next(leitor)
 
         for linha in leitor:
+            if not linha:
+                continue
             if linha[1].strip().lower() == nome_aparelho_analisar.strip().lower():
                 aparelhos_encontrados.append(linha)
 
@@ -319,6 +368,8 @@ def analisar_aparelho():
         cabecalho_arduino = next(leitor_arduino)
 
         for linha in leitor_arduino:
+            if not linha:
+                continue
             if linha[1].strip().lower() == id_sensor.strip().lower():
                 dados_arduino_aparelho = 1
 
