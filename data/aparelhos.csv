@@ -1,3 +1,7 @@
-computador,escritório,220
-Ventilador,Quarto de Chico,220
-iluminação,sala 07,220
+id_equipamento,nome,setor,id_sensor,tensao,corrente,horas
+20260603171144,TESTE,MOINHO 2,DDD,220,10,10
+222444555666,ar-condicionado,escritorio,SS1,220,12,24
+222444666777,ar-condicionado,quarto,SS2,220,12,24
+555666888999,computador,escritorio,AA1,220,10,18
+20260611152837,televisao,quarto,QQ2,220,120,12
+
