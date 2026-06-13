@@ -126,7 +126,7 @@ def visualizar_aparelhos():
         else:
             print("\nAparelhos cadastrados")
         for i, ler in enumerate(ler, start=1):
-            if len(ler) < 7:  # ← adiciona essa verificação
+            if len(ler) < 7:
                 continue
             print(f"[{i}]")
             print(f"  ▸ {'ID do Equipamento':<38} {ler[0]}")
