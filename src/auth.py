@@ -15,7 +15,7 @@ def cadastro_das_empresas():
     print("\n Nome da empresa: ", end="")
     nome = input().strip()
 
-    with open(arquivo_empresas, "r", encoding="utf=8") as arquivo:
+    with open(arquivo_empresas, "r", encoding="utf-8") as arquivo:
         leitor = csv.DictReader(arquivo)
         for linha in leitor:
             if linha["nome"].lower() == nome.lower():
@@ -27,7 +27,7 @@ def cadastro_das_empresas():
     regime = input("Regime: ").lower().strip()
     atividade = input("Atividade que faz: ").lower().strip()
 
-    with open(arquivo_empresas, "a", newline="", encoding="utf=8") as arquivo:
+    with open(arquivo_empresas, "a", newline="", encoding="utf-8") as arquivo:
         escritor = csv.writer(arquivo)
         escritor.writerow([nome, senha, grupo, regime, atividade])
 
@@ -38,7 +38,7 @@ def login_empresa():
     nome = input("\nNome da empresa: ").strip()
     senha = input("Senha: ").strip()
 
-    with open(arquivo_empresas, "r", encoding="utf=8") as arquivo:
+    with open(arquivo_empresas, "r", encoding="utf-8") as arquivo:
         leitor = csv.DictReader(arquivo)
         for linha in leitor:
             if linha["nome"].lower() == nome.lower() and linha["senha"] == senha:

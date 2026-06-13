@@ -94,7 +94,7 @@ def com_bandeiras (kwh, TARIFA_BASE, grupo_empresa):
 def com_impostos(kwh, TARIFA_BASE, PIS_COFINS, ICMS, grupo_empresa):
     return com_bandeiras(kwh, TARIFA_BASE, grupo_empresa) / (1 - (PIS_COFINS + ICMS))
 
-def calcular():
+def calcular(empresa):
     kwh, PIS_COFINS, ICMS, TARIFA_BASE, grupo_empresa = kwh_para_reais()
     print(f"R${com_impostos(kwh, TARIFA_BASE, PIS_COFINS, ICMS, grupo_empresa):.2f}")
 
@@ -245,6 +245,7 @@ def atualizar_aparelho():
 
     i = aparelhos[posicao_escolhida]
 
+
     while True:
         print(f"1- Nome:          {i[1]}\n2- Setor:         {i[2]}\n3- Tensão:        {i[4]}\n4- ID do Sensor:  {i[3]}\n5- Amperagem:     {i[5]}\n6- Horas:         {i[6]}")
         escolha=int(input("Escolha um para editar: \n"))
@@ -281,7 +282,8 @@ def atualizar_aparelho():
         else:
             print("\nOpção inválida")
             continue
-
+        
+        execucao_loop = True
         while True:
             escolha=int(input("\nVocê deseja editar mais alguma informação? [1] Sim \ [2] Não: "))
             if escolha == 1:
