@@ -21,14 +21,14 @@ def coleta():
     try:
         arduino = serial.Serial(porta, baudrate, timeout=5)
         time.sleep(2)
-        print(f"Conectando ao arduino com a porta {porta}")
+        print(f"Conectando ao Arduino com a porta {porta}.")
     
     except serial.SerialException:
-        print(f"Erro!!! Não foi possível conectar com a porta {porta}.")
-        print("Analise se o arduino foi plugado corretamente e se a porta é a correta.")
+        print(f"Erro! Não foi possível conectar com a porta {porta}.")
+        print("Analise se o Arduino foi plugado corretamente e se a porta é a correta.")
         return
 
-    print("Dados sendo coletados em segundo plano... (Ctrl+C para parar)\n")
+    print("Dados sendo coletados em segundo plano... (Ctrl + C para parar)\n")
 
     with open ("data/dados_arduino.csv", "a", newline="", encoding="utf-8") as arquivo:
         escritor = csv.writer(arquivo)

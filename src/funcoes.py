@@ -3,13 +3,13 @@ import os
 import datetime
 
 def kwh_para_reais ():
-    grupo_empresa = input("Digite o Tipo da empresa A ou B: ").lower().strip()
+    grupo_empresa = input("▸ Tipo da empresa (A/B): ").lower().strip()
     if grupo_empresa == "b":
-        amperagem = float(input("\nAmperagem: "))
+        amperagem = float(input("\n▸ Amperagem: "))
 
-        voltagem = float(input("Voltagem: "))
+        voltagem = float(input("▸ Voltagem: "))
 
-        horas_uso = float(input("Horas de uso: "))
+        horas_uso = float(input("▸ Horas de uso: "))
         
         watt = amperagem * voltagem
 
@@ -17,9 +17,9 @@ def kwh_para_reais ():
         
         TARIFA_BASE = 0.79
     elif grupo_empresa == "a":
-        kwh_fora =  float(input("Consumo fora da ponta (kwh/mês): "))
-        kwh_ponta = float(input("Consumo na ponta (kwh/mês): "))
-        demanda_contratada = float (input("Demanda contratada de (kW): "))
+        kwh_fora =  float(input("▸ Consumo fora da ponta (kwh/mês): "))
+        kwh_ponta = float(input("▸ Consumo na ponta (kwh/mês): "))
+        demanda_contratada = float (input("▸ Demanda contratada de (kW): "))
         
         TARIFA_FORA_PONTA = 0.61
         TARIFA_PONTA = 2.50
@@ -32,7 +32,7 @@ def kwh_para_reais ():
         TARIFA_BASE = custo_fora + custo_ponta + custo_demanda
         kwh = kwh_fora + kwh_ponta
 
-    regime = input("Regime da empresa (simples/presumido/real): ").lower().strip() 
+    regime = input("▸ Regime da empresa (Simples/Presumido/Real): ").lower().strip() 
     while True:
             if regime == "simples":
                 PIS_COFINS = 0.0
@@ -47,9 +47,9 @@ def kwh_para_reais ():
                 print("Digite uma opção valida.")
                 continue
 
-    atividade = input("Digite a atividade (comercio ou industria): ").lower().strip()
+    atividade = input("▸ Atividade (Comércio ou Industria): ").lower().strip()
     while True:
-        if atividade == "comercio":
+        if atividade == "comércio" or atividade == "comercio":
             ICMS = 0.18
             break
         elif atividade == "industria":
@@ -64,7 +64,7 @@ def kwh_para_reais ():
 
 
 def com_bandeiras (kwh, TARIFA_BASE, grupo_empresa):
-    bandeira_tarifaria = input("Digite o tipo da bandeira (verde / amarela / vermelha / vermelha2) ").lower().strip()
+    bandeira_tarifaria = input("▸ Tipo da bandeira (Verde/Amarela/Vermelha/Vermelha 2): ").lower().strip()
     while True:
         if grupo_empresa == "b":
             if bandeira_tarifaria == "verde":
@@ -73,11 +73,11 @@ def com_bandeiras (kwh, TARIFA_BASE, grupo_empresa):
                 return (kwh * TARIFA_BASE) + kwh * 0.01885
             elif bandeira_tarifaria == "vermelha":
                 return (kwh * TARIFA_BASE) + kwh * 0.04463
-            elif bandeira_tarifaria == "vermelha2":
+            elif bandeira_tarifaria == "vermelha 2":
                 return (kwh * TARIFA_BASE) + kwh * 0.07877
             else:
                 print("Bandeira inválida.")
-                bandeira_tarifaria = input("Bandeira: ").lower().strip()
+                bandeira_tarifaria = input("▸ Bandeira: ").lower().strip()
 
         elif grupo_empresa == "a":
             if bandeira_tarifaria == "verde":
@@ -160,10 +160,10 @@ def deletar_aparelho():
          linha_deletar = []
 
          if len(aparelhos_encontrados) > 1:
-             print(f"\nForam encontrados {len(aparelhos_encontrados)} aparelhos com esse nome:\n")
+             print(f"\nAparelhos encontrados com esse nome:\n")
              i = 1
              for linha in aparelhos_encontrados:
-                 print(f"  [{i}] ID: {linha[0]}  ▸ Setor: {linha[2]}  ▸ Tensão: {linha[4]}V")
+                 print(f"  [{i}] ID: {linha[0]}  ▸ Setor: {linha[2]}")
                  i += 1
 
              while encontrou == 0:
@@ -201,7 +201,7 @@ def deletar_aparelho():
 def atualizar_aparelho():
     execucao=0
 
-    nome_aparelho=input("Digite o nome do aparelho: ").strip()
+    nome_aparelho=input("▸ Nome do aparelho: ").strip()
 
     with open("data/aparelhos.csv", 'r', newline='', encoding='utf-8') as arquivo, \
         open("data/aparelhos_temp.csv", 'w', newline='', encoding='utf-8') as arquivo_temp:
@@ -226,12 +226,12 @@ def atualizar_aparelho():
             print("Aparelho não encontrado!")
             return
         if len(aparelhos_encontrados) > 1:
-            print(f"\nForam encontrados {len(aparelhos_encontrados)} aparelhos com esse nome:\n")
+            print(f"\n▸ Aparelhos com esse nome:\n")
 
             numero = 1 
             
             for linha in aparelhos_encontrados:
-                print(f" [{numero}] ID: {linha[0]} > Setor: {linha[2]} > Tensão: {linha[4]}V")
+                print(f"  [{i}] ID: {linha[0]}  ▸ Setor: {linha[2]}")
                 numero = numero + 1
             while True:
                 escolha_numero = input("\n▸ Digite o número do aparelho que deseja editar: ")
@@ -246,36 +246,36 @@ def atualizar_aparelho():
     i = aparelhos[posicao_escolhida]
 
     while True:
-        print(f"1- Nome:          {i[1]}\n2- Setor:         {i[2]}\n3- Tensão:        {i[4]}\n4- ID do Sensor:  {i[3]}\n5- Amperagem:     {i[5]}\n6- Horas:         {i[6]}")
+        print(f"[1] Nome do equipamento:          {i[1]}\n[2] Setor/Localização:         {i[2]}\n[3] Tensão Nominal:        {i[4]}\n[4] ID do Sensor:  {i[3]}\n[5] Corrente Nominal:     {i[5]}\n[6] Horas de Operação Previstas (h/dia):         {i[6]}")
         escolha=int(input("Escolha um para editar: \n"))
         if escolha==1:
-            print(f"Setor atual: {i[1]}")
-            nome=input("\nDigite o novo nome do aparelho: ").strip()
+            print(f"▸ Nome do equipamento: {i[1]}")
+            nome=input("\n▸ Novo nome do equipamento: ").strip()
             execucao = 2
             i[1] = nome.strip()
         elif escolha==2:
-            print(f"Setor atual: {i[2]}")
-            setor_aparelho=input("\nDigite o novo setor do aparelho: ")
+            print(f"▸ Setor/Localização atual: {i[2]}")
+            setor_aparelho=input("\nNovo Setor/Localização: ")
             execucao=2
             i[2] = setor_aparelho.strip()
         elif escolha==3:
-            print(f"Voltagem atual: {i[4]}")
-            voltagem_aparelho=input("\nDigite a nova voltagem do aparelho: ")
+            print(f"▸ Tensão Nominal Atual: {i[4]}")
+            voltagem_aparelho=input("\n▸ Nova Tensão Nominal: ")
             execucao=2
             i[4] = voltagem_aparelho.strip()
         elif escolha==4:
-            print(f"ID do sensor atual atual: {i[3]}")
-            id_sensor=input("\nDigite o novo ID do Sensor: ")
+            print(f"▸ ID do sensor atual: {i[3]}")
+            id_sensor=input("\n▸ Novo ID do Sensor: ")
             execucao=2
             i[3] = id_sensor.strip()
         elif escolha==5:
-            print(f"Amperagem atual: {i[5]}")
-            amperagem_aparelho=input("\nDigite a nova amperagem do aparelho: ")
+            print(f"▸ Corrente Nominal atual: {i[5]}")
+            amperagem_aparelho=input("\n▸ Nova Corrente Nominal: ")
             execucao=2
             i[5] = amperagem_aparelho.strip()
         elif escolha==6:
-            print(f"Horas atuais: {i[6]}")
-            horas=input("\nDigite a nova quantidade de horas do aparelho: ")
+            print(f"▸ Horas de Operação Previstas (h/dia):: {i[6]}")
+            horas=input("\n▸ Novas Horas de Operação Previstas (h/dia):: ")
             execucao=2
             i[6] = horas.strip()
         else:
@@ -283,7 +283,7 @@ def atualizar_aparelho():
             continue
 
         while True:
-            escolha=int(input("\nVocê deseja editar mais alguma informação? [1] Sim \ [2] Não: "))
+            escolha=int(input("\n▸ Você deseja editar mais alguma informação?\n [1] Sim | [2] Não: "))
             if escolha == 1:
                 break
             elif escolha == 2:
@@ -303,10 +303,10 @@ def atualizar_aparelho():
 
         if execucao==2:
             os.replace("data/aparelhos_temp.csv", "data/aparelhos.csv")
-            print("Aparelho atualizado")
+            print("Aparelho atualizado!")
 
 def analisar_aparelho():
-    nome_aparelho_analisar = input("\nDigite o nome do aparelho que você deseja analisar: ").strip()
+    nome_aparelho_analisar = input("\n▸ Nome do aparelho: ").strip()
 
     aparelhos_encontrados = []
 
@@ -327,7 +327,7 @@ def analisar_aparelho():
     print(f"\nEncontramos {len(aparelhos_encontrados)} aparelho(s) com esse nome:")
 
     for i in aparelhos_encontrados:
-        print(f"\nId do Equipamento: {i[0]}")
+        print(f"\n▸ ID do Equipamento: {i[0]}")
         print(f"Nome: {i[1].capitalize()}")
         print(f"Setor: {i[2].capitalize()}")
         print(f"Id do Sensor: {i[3]}")
@@ -343,7 +343,7 @@ def analisar_aparelho():
     if len(aparelhos_encontrados) > 1: 
         id_valido = 0
         while id_valido == 0:
-            id_escolhido = input("\nDigite o ID do equipamento que deseja analisar: ").strip()
+            id_escolhido = input("\nID do equipamento: ").strip()
 
             for i in aparelhos_encontrados:
                 if i[0] == id_escolhido:
