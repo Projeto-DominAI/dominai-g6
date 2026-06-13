@@ -12,7 +12,7 @@ def criar_csv_empresas():
             escritor.writerow(["nome", "senha", "grupo", "regime", "atividade"])
 
 def cadastro_das_empresas():
-    print("\n Nome da empresa: ", end="")
+    print("\n▸ Nome da empresa: ", end="")
     nome = input().strip()
 
     with open(arquivo_empresas, "r", encoding="utf=8") as arquivo:
@@ -22,10 +22,10 @@ def cadastro_das_empresas():
                 print("Está empresa já está cadastrada.")
                 return None
     
-    senha = input("Crie sua senha: ").strip()
-    grupo = input("Grupo da empresa que representa: ").lower().lower()
-    regime = input("Regime: ").lower().strip()
-    atividade = input("Atividade que faz: ").lower().strip()
+    senha = input("▸ Senha: ").strip()
+    grupo = input("▸ Grupo da empresa que representa: ").lower().lower()
+    regime = input("▸ Regime: ").lower().strip()
+    atividade = input("▸ Atividade: ").lower().strip()
 
     with open(arquivo_empresas, "a", newline="", encoding="utf=8") as arquivo:
         escritor = csv.writer(arquivo)
@@ -35,8 +35,8 @@ def cadastro_das_empresas():
     return {"nome": nome, "grupo": grupo, "regime": regime, "atividade": atividade}
 
 def login_empresa():
-    nome = input("\nNome da empresa: ").strip()
-    senha = input("Senha: ").strip()
+    nome = input("\n▸ Nome da empresa: ").strip()
+    senha = input("▸ Senha: ").strip()
 
     with open(arquivo_empresas, "r", encoding="utf=8") as arquivo:
         leitor = csv.DictReader(arquivo)

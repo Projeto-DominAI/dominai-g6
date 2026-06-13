@@ -13,6 +13,8 @@ escolha_auth = input("➜ ").strip()
 empresa = None
 
 if escolha_auth == "2":
+    os.system('cls' if os.name =='nt' else 'clear')
+    print(ui.TITULO_CADASTRAR_EMPRESA)
     empresa = auth.cadastro_das_empresas()
 elif escolha_auth == "1":
     empresa = auth.login_empresa()
